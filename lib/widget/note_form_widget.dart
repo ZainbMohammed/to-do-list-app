@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 class NoteFormWidget extends StatelessWidget {
-  final bool? isImportant;
+  // final bool? isImportant;
   final int? number;
   final String? title;
   final String? description;
-  final ValueChanged<bool> onChangedImportant;
+  // final ValueChanged<bool> onChangedImportant;
   final ValueChanged<int> onChangedNumber;
   final ValueChanged<String> onChangedTitle;
   final ValueChanged<String> onChangedDescription;
 
   const NoteFormWidget({
     Key? key,
-    this.isImportant = false,
+    // this.isImportant = false,
     this.number = 0,
     this.title = '',
     this.description = '',
-    required this.onChangedImportant,
+    // required this.onChangedImportant,
     required this.onChangedNumber,
     required this.onChangedTitle,
     required this.onChangedDescription,
@@ -31,10 +31,10 @@ class NoteFormWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Switch(
-                    value: isImportant ?? false,
-                    onChanged: onChangedImportant,
-                  ),
+                  // Switch(
+                  //   value: isImportant ?? false,
+                  //   onChanged: onChangedImportant,
+                  // ),
                   Expanded(
                     child: Slider(
                       value: (number ?? 0).toDouble(),

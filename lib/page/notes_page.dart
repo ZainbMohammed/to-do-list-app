@@ -119,7 +119,7 @@ class _NotesPageState extends State<NotesPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Center(
