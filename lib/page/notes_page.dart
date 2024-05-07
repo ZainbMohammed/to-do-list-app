@@ -41,35 +41,73 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Padding(
-            padding: EdgeInsets.only(top: 30.0, left: 8),
-            child: Text(
-              'Notes',
-              style: TextStyle(fontSize: 30, color: Colors.white),
-            ),
-          ),
-          actions: const [
-            Padding(
-              padding: EdgeInsets.only(top: 30.0, right: 8),
-              child: Icon(
-                Icons.search,
-                size: 30,
-                color: Colors.white,
+        // appBar:
+        // AppBar(
+        //   title: const Padding(
+        //     padding: EdgeInsets.only(top: 30.0, left: 8),
+        //     child: Text(
+        //       'Notes',
+        //       style: TextStyle(fontSize: 30, color: Colors.white),
+        //     ),
+        //   ),
+        //   actions: const [
+        //     Padding(
+        //       padding: EdgeInsets.only(top: 30.0, right: 8),
+        //       child: Icon(
+        //         Icons.search,
+        //         size: 30,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //     SizedBox(width: 12)
+        //   ],
+        // ),
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
+          child: Column(
+            children: [
+              Center(
+                child: isLoading
+                    ? const CircularProgressIndicator()
+                    : notes.isEmpty
+                        ? const Text(
+                            'No Notes',
+                            style: TextStyle(color: Colors.white, fontSize: 24),
+                          )
+                        : buildNotes(),
               ),
-            ),
-            SizedBox(width: 12)
-          ],
-        ),
-        body: Center(
-          child: isLoading
-              ? const CircularProgressIndicator()
-              : notes.isEmpty
-                  ? const Text(
-                      'No Notes',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    )
-                  : buildNotes(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Notes',
+                    style: TextStyle(fontSize: 30, color: Colors.white),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          // filteredNotes = sortNotesByModifiedTime(filteredNotes);
+                        });
+                      },
+                      padding: const EdgeInsets.all(0),
+                      icon: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade800.withOpacity(.8),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: const Icon(
+                          Icons.sort,
+                          color: Colors.white,
+                        ),
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
@@ -95,8 +133,8 @@ class _NotesPageState extends State<NotesPage> {
       // itemCount: notes.length,
       // staggeredTileBuilder: (index) => StaggeredTile.fit(2),
       crossAxisCount: 2,
-      mainAxisSpacing: 2,
-      crossAxisSpacing: 2,
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 5,
       children: List.generate(
         notes.length,
         (index) {

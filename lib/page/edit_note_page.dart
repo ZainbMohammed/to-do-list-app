@@ -33,45 +33,76 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          actions: [buildButton()],
-        ),
-        body: Form(
-          key: _formKey,
-          child: NoteFormWidget(
-            isImportant: isImportant,
-            number: number,
-            title: title,
-            description: description,
-            onChangedImportant: (isImportant) =>
-                setState(() => this.isImportant = isImportant),
-            onChangedNumber: (number) => setState(() => this.number = number),
-            onChangedTitle: (title) => setState(() => this.title = title),
-            onChangedDescription: (description) =>
-                setState(() => this.description = description),
-          ),
-        ),
+  Widget build(BuildContext context) => Column(
+        // appBar: AppBar(
+        //   actions: [buildButton()],
+        // ),
+        children: [
+          Row(
+            children: [
+              buildButton(),
+              Form(
+                key: _formKey,
+                child: NoteFormWidget(
+                  isImportant: isImportant,
+                  number: number,
+                  title: title,
+                  description: description,
+                  onChangedImportant: (isImportant) =>
+                      setState(() => this.isImportant = isImportant),
+                  onChangedNumber: (number) =>
+                      setState(() => this.number = number),
+                  onChangedTitle: (title) => setState(() => this.title = title),
+                  onChangedDescription: (description) =>
+                      setState(() => this.description = description),
+                ),
+              ),
+            ],
+          )
+        ],
       );
 
   Widget buildButton() {
     final isFormValid = title.isNotEmpty && description.isNotEmpty;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 20, right: 20),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.black,
-          backgroundColor: isFormValid ? Colors.white : Colors.grey.shade500,
-        ),
-        onPressed: addOrUpdateNote,
-        child: const Text(
-          'Add',
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.0),
-        ),
-      ),
-    );
+        padding: const EdgeInsets.only(top: 20, right: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                padding: const EdgeInsets.all(0),
+                icon: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade800.withOpacity(.8),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ),
+                )),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor:
+                    isFormValid ? Colors.white : Colors.grey.shade500,
+              ),
+              onPressed: addOrUpdateNote,
+              child: const Text(
+                'Add',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0),
+              ),
+            ),
+          ],
+        ));
   }
 
   void addOrUpdateNote() async {

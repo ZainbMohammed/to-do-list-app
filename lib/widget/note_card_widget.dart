@@ -30,6 +30,7 @@ class NoteCardWidget extends StatelessWidget {
 
     return Card(
       color: color,
+      elevation: 10,
       child: Container(
         constraints: BoxConstraints(minHeight: minHeight),
         padding: const EdgeInsets.all(8),
@@ -39,14 +40,14 @@ class NoteCardWidget extends StatelessWidget {
           children: [
             Text(
               time,
-              style: TextStyle(color: Colors.grey.shade700),
+              style: TextStyle(color: Colors.grey.shade900),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 10),
             Text(
               note.title,
               style: const TextStyle(
                 color: Colors.black,
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -58,17 +59,18 @@ class NoteCardWidget extends StatelessWidget {
 
   /// To return different height for different widgets
   double getMinHeight(int index) {
-    switch (index % 4) {
-      case 0:
-        return 100;
-      case 1:
-        return 150;
-      case 2:
-        return 150;
-      case 3:
-        return 100;
-      default:
-        return 100;
-    }
+    // switch (index % 4) {
+    //   case 0:
+    //     return 100;
+    //   case 1:
+    //     return 150;
+    //   case 2:
+    //     return 150;
+    //   case 3:
+    //     return 100;
+    //   default:
+    //     return 100;
+    // }
+    return 150;
   }
 }
