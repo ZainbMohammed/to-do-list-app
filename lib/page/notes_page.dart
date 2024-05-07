@@ -15,6 +15,8 @@ class NotesPage extends StatefulWidget {
 
 class _NotesPageState extends State<NotesPage> {
   late List<Note> notes;
+  List<Note> _foundToDo = [];
+
   bool isLoading = false;
 
   @override
@@ -97,7 +99,7 @@ class _NotesPageState extends State<NotesPage> {
                 height: 20,
               ),
               TextField(
-                onChanged: null,
+                onChanged: (value) => _runFilter(value),
                 style: const TextStyle(fontSize: 16, color: Colors.white),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -204,4 +206,19 @@ class _NotesPageState extends State<NotesPage> {
   //         );
   //       },
   //     );
+  void _runFilter(String enteredKeyword) {
+    List<Note> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = notes;
+    } else {
+      results = notes
+          .where((item) =>
+              item.title!.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      _foundToDo = results;
+    });
+  }
 }
