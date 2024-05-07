@@ -25,7 +25,7 @@ class NoteFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -55,36 +55,43 @@ class NoteFormWidget extends StatelessWidget {
         ),
       );
 
-  Widget buildTitle() => TextFormField(
-        maxLines: 1,
-        initialValue: title,
-        style: const TextStyle(
-          color: Colors.white70,
-          fontWeight: FontWeight.bold,
-          fontSize: 24,
+  Widget buildTitle() => Padding(
+        padding: const EdgeInsets.only(top: 80.0, left: 8.0),
+        child: TextFormField(
+          maxLines: 1,
+          initialValue: title,
+          style: const TextStyle(
+            color: Colors.white70,
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+          ),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Task Title',
+            hintStyle: TextStyle(color: Colors.white70),
+          ),
+          validator: (title) => title != null && title.isEmpty
+              ? 'The title cannot be empty'
+              : null,
+          onChanged: onChangedTitle,
         ),
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          hintText: 'Title',
-          hintStyle: TextStyle(color: Colors.white70),
-        ),
-        validator: (title) =>
-            title != null && title.isEmpty ? 'The title cannot be empty' : null,
-        onChanged: onChangedTitle,
       );
 
-  Widget buildDescription() => TextFormField(
-        maxLines: 5,
-        initialValue: description,
-        style: const TextStyle(color: Colors.white60, fontSize: 18),
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          hintText: 'Type something...',
-          hintStyle: TextStyle(color: Colors.white60),
+  Widget buildDescription() => Padding(
+        padding: const EdgeInsets.only(top: 40.0, left: 8.0),
+        child: TextFormField(
+          maxLines: 5,
+          initialValue: description,
+          style: const TextStyle(color: Colors.white60, fontSize: 24),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Task Descreption',
+            hintStyle: TextStyle(color: Colors.white60),
+          ),
+          validator: (title) => title != null && title.isEmpty
+              ? 'The description cannot be empty'
+              : null,
+          onChanged: onChangedDescription,
         ),
-        validator: (title) => title != null && title.isEmpty
-            ? 'The description cannot be empty'
-            : null,
-        onChanged: onChangedDescription,
       );
 }

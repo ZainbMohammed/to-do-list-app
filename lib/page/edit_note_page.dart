@@ -67,7 +67,11 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
           // disabledBackgroundColor: isFormValid ? Colors.green : Colors.red,
         ),
         onPressed: addOrUpdateNote,
-        child: const Text('Save'),
+        child: const Text(
+          'Add',
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.0),
+        ),
       ),
     );
   }
