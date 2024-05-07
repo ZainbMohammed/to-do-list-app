@@ -25,7 +25,7 @@ class NoteFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(top: 20, left: 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -47,9 +47,9 @@ class NoteFormWidget extends StatelessWidget {
                 ],
               ),
               buildTitle(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 0),
               buildDescription(),
-              const SizedBox(height: 16),
+              // const SizedBox(height: 16),
             ],
           ),
         ),

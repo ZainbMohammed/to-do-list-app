@@ -43,7 +43,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
             : Padding(
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(30),
                 child: ListView(
                   padding: const EdgeInsets.symmetric(vertical: 80),
                   children: [
@@ -64,7 +64,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 60),
                     Text(
                       note.description,
                       style:
