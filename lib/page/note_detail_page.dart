@@ -56,9 +56,6 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     Text(
                       note.title,
                       style: const TextStyle(
-                        // color: Colors.white,
-                        // fontSize: 22,
-                        // fontWeight: FontWeight.bold,
                         color: Colors.white70,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,

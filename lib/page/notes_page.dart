@@ -75,14 +75,10 @@ class _NotesPageState extends State<NotesPage> {
           padding: const EdgeInsets.only(bottom: 4.0),
           child: FloatingActionButton(
             backgroundColor: Colors.white,
-            // clipBehavior: Clip.none,
-            // shape:ShapeBorder.lerp(a, b, t),
-            // hoverColor: Colors.grey,
             child: const Icon(
               Icons.add,
               size: 30,
               weight: 10.0,
-              // color: Colors.red,
             ),
             onPressed: () async {
               await Navigator.of(context).push(
