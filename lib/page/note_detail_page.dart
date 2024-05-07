@@ -43,28 +43,32 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
             : Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(40),
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 80),
                   children: [
+                    Text(
+                      DateFormat.yMMMd().format(note.createdTime),
+                      style:
+                          const TextStyle(color: Colors.white38, fontSize: 20),
+                    ),
+                    const SizedBox(height: 20),
                     Text(
                       note.title,
                       style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
+                        // color: Colors.white,
+                        // fontSize: 22,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.white70,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      DateFormat.yMMMd().format(note.createdTime),
-                      style: const TextStyle(color: Colors.white38),
-                    ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 40),
                     Text(
                       note.description,
                       style:
-                          const TextStyle(color: Colors.white70, fontSize: 18),
+                          const TextStyle(color: Colors.white70, fontSize: 24),
                     )
                   ],
                 ),
@@ -72,7 +76,11 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       );
 
   Widget editButton() => IconButton(
-      icon: const Icon(Icons.edit_outlined),
+      icon: const Icon(
+        Icons.edit_outlined,
+        size: 30,
+        color: Colors.white,
+      ),
       onPressed: () async {
         if (isLoading) return;
 
@@ -84,7 +92,12 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       });
 
   Widget deleteButton() => IconButton(
-        icon: const Icon(Icons.delete),
+        icon: const Icon(
+          Icons.delete,
+          size: 30,
+          color: Colors.white,
+        ),
+        highlightColor: Colors.red,
         onPressed: () async {
           await NotesDatabase.instance.delete(widget.noteId);
 
