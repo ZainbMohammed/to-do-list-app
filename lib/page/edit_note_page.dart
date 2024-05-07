@@ -58,11 +58,13 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     final isFormValid = title.isNotEmpty && description.isNotEmpty;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      padding: const EdgeInsets.only(top: 20, right: 20),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: isFormValid ? null : Colors.grey.shade700,
+          foregroundColor: Colors.black,
+          backgroundColor: isFormValid ? Colors.white : Colors.grey.shade500,
+          // shadowColor: isFormValid ? Colors.green : Colors.red,
+          // disabledBackgroundColor: isFormValid ? Colors.green : Colors.red,
         ),
         onPressed: addOrUpdateNote,
         child: const Text('Save'),

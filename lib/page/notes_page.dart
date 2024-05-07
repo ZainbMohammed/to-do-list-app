@@ -42,11 +42,24 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Notes',
-            style: TextStyle(fontSize: 24),
+          title: const Padding(
+            padding: EdgeInsets.only(top: 30.0, left: 8),
+            child: Text(
+              'Notes',
+              style: TextStyle(fontSize: 30, color: Colors.white),
+            ),
           ),
-          actions: const [Icon(Icons.search), SizedBox(width: 12)],
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(top: 30.0, right: 8),
+              child: Icon(
+                Icons.search,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: 12)
+          ],
         ),
         body: Center(
           child: isLoading
@@ -58,16 +71,28 @@ class _NotesPageState extends State<NotesPage> {
                     )
                   : buildNotes(),
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: const Icon(Icons.add),
-          onPressed: () async {
-            await Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const AddEditNotePage()),
-            );
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 4.0),
+          child: FloatingActionButton(
+            backgroundColor: Colors.white,
+            // clipBehavior: Clip.none,
+            // shape:ShapeBorder.lerp(a, b, t),
+            // hoverColor: Colors.grey,
+            child: const Icon(
+              Icons.add,
+              size: 30,
+              weight: 10.0,
+              // color: Colors.red,
+            ),
+            onPressed: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => const AddEditNotePage()),
+              );
 
-            refreshNotes();
-          },
+              refreshNotes();
+            },
+          ),
         ),
       );
   Widget buildNotes() => StaggeredGrid.count(
