@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../model/note.dart';
+import '../model/users2.dart';
 
 class NotesDatabase {
   static final NotesDatabase instance = NotesDatabase._init();
@@ -40,17 +41,14 @@ CREATE TABLE $tableNotes (
   )
 ''');
 
-// await db.execute('''
-// CREATE TABLE $tableNotes ( 
-//   ${NoteFields.id} $idType, 
-//   ${NoteFields.isImportant} $boolType,
-//   ${NoteFields.number} $integerType,
-//   ${NoteFields.title} $textType,
-//   ${NoteFields.description} $textType,
-//   ${NoteFields.time} $textType
-//   )
-// ''');
-//   }
+    await db.execute('''
+CREATE TABLE $tableUsers (
+  ${UserFields.userId} $idType,
+  ${UserFields.userName} $textType,
+  ${UserFields.userPassword} $textType,
+  )
+''');
+  }
 
   Future<Note> create(Note note) async {
     final db = await instance.database;
@@ -65,6 +63,21 @@ CREATE TABLE $tableNotes (
 
     final id = await db.insert(tableNotes, note.toJson());
     return note.copy(id: id);
+  }
+  // create user 
+  Future<User> createUser(User user) async {
+    final db = await instance.database;
+
+    // final json = note.toJson();
+    // final columns =
+    //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
+    // final values =
+    //     '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
+    // final id = await db
+    //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
+
+    final id = await db.insert(tableUsers, user.toJson());
+    return user.copy(id: id);
   }
 
   Future<Note> readNote(int id) async {
@@ -81,6 +94,24 @@ CREATE TABLE $tableNotes (
       return Note.fromJson(maps.first);
     } else {
       throw Exception('ID $id not found');
+    }
+  }
+
+  // read user
+  Future<User> readUser(int userId) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableUsers,
+      columns: UserFields.values,
+      where: '${UserFields.userId} = ?',
+      whereArgs: [userId],
+    );
+
+    if (maps.isNotEmpty) {
+      return User.fromJson(maps.first);
+    } else {
+      throw Exception('ID $userId not found');
     }
   }
 
