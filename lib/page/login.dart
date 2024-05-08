@@ -1,51 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:note_tasks_app/page/login.dart';
+import 'package:note_tasks_app/page/signup_page.dart';
 import 'package:note_tasks_app/model/users.dart';
 import 'package:note_tasks_app/db/sqlite.dart';
+import 'package:note_tasks_app/page/notes_page.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LoginScreenState extends State<LoginScreen> {
+  //We need two text editing controller
+
+  //TextEditing controller to control the text when we enter into it
   final username = TextEditingController();
   final password = TextEditingController();
-  final confirmPassword = TextEditingController();
 
-  final formKey = GlobalKey<FormState>();
-
+  //A bool variable for show and hide password
   bool isVisible = false;
 
+  //Here is our bool variable
+  bool isLoginTrue = false;
+
+  final db = DatabaseHelper();
+
+  //Now we should call this function in login button
+  login() async {
+    var response = await db
+        .login(Users(usrName: username.text, usrPassword: password.text));
+    if (response == true) {
+      //If login is correct, then goto notes
+      if (!mounted) return;
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const NotesPage()));
+    } else {
+      //If not, true the bool value to show error message
+      setState(() {
+        isLoginTrue = true;
+      });
+    }
+  }
+
+  //We have to create global key for our form
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //SingleChildScrollView to have an scrol in the screen
       body: Center(
         child: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            //We put all our textfield to a form to be controlled and not allow as empty
+            child: Form(
+              key: formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //We will copy the previous textfield we designed to avoid time consuming
+                  //Username field
 
-                  const ListTile(
-                    title: Text(
-                      "Register New Account",
-                      style:
-                          TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-                    ),
+                  //Before we show the image, after we copied the image we need to define the location in pubspec.yaml
+                  Image.asset(
+                    "lib/assets/login.png",
+                    width: 210,
                   ),
-
-                  //As we assigned our controller to the textformfields
-
+                  const SizedBox(height: 15),
                   Container(
-                    margin: EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(8),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
@@ -102,44 +123,6 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
 
-                  //Confirm Password field
-                  // Now we check whether password matches or not
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.deepPurple.withOpacity(.2)),
-                    child: TextFormField(
-                      controller: confirmPassword,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "password is required";
-                        } else if (password.text != confirmPassword.text) {
-                          return "Passwords don't match";
-                        }
-                        return null;
-                      },
-                      obscureText: !isVisible,
-                      decoration: InputDecoration(
-                          icon: const Icon(Icons.lock),
-                          border: InputBorder.none,
-                          hintText: "Password",
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                //In here we will create a click to show and hide the password a toggle button
-                                setState(() {
-                                  //toggle button
-                                  isVisible = !isVisible;
-                                });
-                              },
-                              icon: Icon(isVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off))),
-                    ),
-                  ),
-
                   const SizedBox(height: 10),
                   //Login button
                   Container(
@@ -152,24 +135,14 @@ class _SignUpState extends State<SignUp> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             //Login method will be here
+                            login();
 
-                            final db = DatabaseHelper();
-                            db
-                                .signup(Users(
-                                    usrName: username.text,
-                                    usrPassword: password.text))
-                                .whenComplete(() {
-                              //After success user creation go to login screen
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()));
-                            });
+                            //Now we have a response from our sqlite method
+                            //We are going to create a user
                           }
                         },
                         child: const Text(
-                          "SIGN UP",
+                          "LOGIN",
                           style: TextStyle(color: Colors.white),
                         )),
                   ),
@@ -178,18 +151,26 @@ class _SignUpState extends State<SignUp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Already have an account?"),
+                      const Text("Don't have an account?"),
                       TextButton(
                           onPressed: () {
                             //Navigate to sign up
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()));
+                                    builder: (context) => const SignUp()));
                           },
-                          child: const Text("Login"))
+                          child: const Text("SIGN UP"))
                     ],
-                  )
+                  ),
+
+                  // We will disable this message in default, when user and pass is incorrect we will trigger this message to user
+                  isLoginTrue
+                      ? const Text(
+                          "Username or passowrd is incorrect",
+                          style: TextStyle(color: Colors.red),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),
