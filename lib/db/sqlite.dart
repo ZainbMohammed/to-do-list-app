@@ -57,7 +57,7 @@ class DatabaseHelper {
     final Database db = await initDB();
     List<Map<String, Object?>> searchResult = await db
         .rawQuery("select * from notes where noteTitle LIKE ?", ["%$keyword%"]);
-    return searchResult.map((e) => Note.fromMap(e)).toList();
+    return searchResult.map((e) => Note.fromJson(e)).toList();
   }
 
   //CRUD Methods
@@ -65,14 +65,14 @@ class DatabaseHelper {
   //Create Note
   Future<int> createNote(Note note) async {
     final Database db = await initDB();
-    return db.insert('notes', note.toMap());
+    return db.insert('notes', note.toJson());
   }
 
   //Get notes
   Future<List<Note>> getNotes() async {
     final Database db = await initDB();
     List<Map<String, Object?>> result = await db.query('notes');
-    return result.map((e) => Note.fromMap(e)).toList();
+    return result.map((e) => Note.fromJson(e)).toList();
   }
 
   //Delete Notes
