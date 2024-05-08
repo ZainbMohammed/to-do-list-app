@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Colors.deepPurple.withOpacity(.2)),
+                        color: Colors.grey.withOpacity(.25)),
                     child: TextFormField(
                       controller: username,
                       validator: (value) {
@@ -81,9 +81,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.person),
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.white54,
+                          size: 25,
+                        ),
                         border: InputBorder.none,
                         hintText: "Username",
+                        hintStyle:
+                            TextStyle(color: Colors.white54, fontSize: 18),
                       ),
                     ),
                   ),
@@ -95,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Colors.deepPurple.withOpacity(.2)),
+                        color: Colors.grey.withOpacity(.25)),
                     child: TextFormField(
                       controller: password,
                       validator: (value) {
@@ -106,9 +112,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       obscureText: !isVisible,
                       decoration: InputDecoration(
-                          icon: const Icon(Icons.lock),
+                          icon: const Icon(
+                            Icons.lock,
+                            color: Colors.white54,
+                            size: 25,
+                          ),
                           border: InputBorder.none,
                           hintText: "Password",
+                          hintStyle: const TextStyle(
+                              color: Colors.white54, fontSize: 18),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 //In here we will create a click to show and hide the password a toggle button
@@ -123,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 80),
                   //Login button
                   Container(
                     height: 55,
@@ -143,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: const Text(
                           "LOGIN",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         )),
                   ),
 
@@ -151,7 +163,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Don't have an account?"),
+                      const Text(
+                        "Don't have an account?",
+                        style: TextStyle(fontSize: 16, color: Colors.white54),
+                      ),
                       TextButton(
                           onPressed: () {
                             //Navigate to sign up
@@ -160,10 +175,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => const SignUp()));
                           },
-                          child: const Text("SIGN UP"))
+                          child: const Text(
+                            "SIGN UP",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ))
                     ],
                   ),
-
                   // We will disable this message in default, when user and pass is incorrect we will trigger this message to user
                   isLoginTrue
                       ? const Text(

@@ -40,17 +40,17 @@ CREATE TABLE $tableNotes (
   )
 ''');
 
-await db.execute('''
-CREATE TABLE $tableNotes ( 
-  ${NoteFields.id} $idType, 
-  ${NoteFields.isImportant} $boolType,
-  ${NoteFields.number} $integerType,
-  ${NoteFields.title} $textType,
-  ${NoteFields.description} $textType,
-  ${NoteFields.time} $textType
-  )
-''');
-  }
+// await db.execute('''
+// CREATE TABLE $tableNotes ( 
+//   ${NoteFields.id} $idType, 
+//   ${NoteFields.isImportant} $boolType,
+//   ${NoteFields.number} $integerType,
+//   ${NoteFields.title} $textType,
+//   ${NoteFields.description} $textType,
+//   ${NoteFields.time} $textType
+//   )
+// ''');
+//   }
 
   Future<Note> create(Note note) async {
     final db = await instance.database;

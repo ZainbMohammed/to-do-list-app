@@ -22,6 +22,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey.shade900,
       //SingleChildScrollView to have an scrol in the screen
       body: Center(
         child: SingleChildScrollView(
@@ -37,20 +38,19 @@ class _SignUpState extends State<SignUp> {
                   const ListTile(
                     title: Text(
                       "Register New Account",
-                      style:
-                          TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white70),
                     ),
                   ),
-
-                  //As we assigned our controller to the textformfields
-
                   Container(
                     margin: EdgeInsets.all(8),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Colors.deepPurple.withOpacity(.2)),
+                        color: Colors.grey.withOpacity(.25)),
                     child: TextFormField(
                       controller: username,
                       validator: (value) {
@@ -60,10 +60,15 @@ class _SignUpState extends State<SignUp> {
                         return null;
                       },
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.person),
-                        border: InputBorder.none,
-                        hintText: "Username",
-                      ),
+                          icon: Icon(
+                            Icons.person,
+                            color: Colors.white54,
+                            size: 25,
+                          ),
+                          border: InputBorder.none,
+                          hintText: "User Name",
+                          hintStyle:
+                              TextStyle(color: Colors.white54, fontSize: 18)),
                     ),
                   ),
 
@@ -74,7 +79,7 @@ class _SignUpState extends State<SignUp> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Colors.deepPurple.withOpacity(.2)),
+                        color: Colors.grey.withOpacity(.25)),
                     child: TextFormField(
                       controller: password,
                       validator: (value) {
@@ -85,9 +90,15 @@ class _SignUpState extends State<SignUp> {
                       },
                       obscureText: !isVisible,
                       decoration: InputDecoration(
-                          icon: const Icon(Icons.lock),
+                          icon: const Icon(
+                            Icons.lock,
+                            color: Colors.white54,
+                            size: 25,
+                          ),
                           border: InputBorder.none,
                           hintText: "Password",
+                          hintStyle: const TextStyle(
+                              color: Colors.white54, fontSize: 18),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 //In here we will create a click to show and hide the password a toggle button
@@ -110,7 +121,7 @@ class _SignUpState extends State<SignUp> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Colors.deepPurple.withOpacity(.2)),
+                        color: Colors.grey.withOpacity(.25)),
                     child: TextFormField(
                       controller: confirmPassword,
                       validator: (value) {
@@ -123,9 +134,15 @@ class _SignUpState extends State<SignUp> {
                       },
                       obscureText: !isVisible,
                       decoration: InputDecoration(
-                          icon: const Icon(Icons.lock),
+                          icon: const Icon(
+                            Icons.lock,
+                            color: Colors.white54,
+                            size: 25,
+                          ),
                           border: InputBorder.none,
-                          hintText: "Password",
+                          hintText: "Confirm Password",
+                          hintStyle:
+                              TextStyle(color: Colors.white54, fontSize: 18),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 //In here we will create a click to show and hide the password a toggle button
@@ -140,7 +157,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 80),
                   //Login button
                   Container(
                     height: 55,
@@ -170,7 +187,7 @@ class _SignUpState extends State<SignUp> {
                         },
                         child: const Text(
                           "SIGN UP",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         )),
                   ),
 
@@ -178,7 +195,10 @@ class _SignUpState extends State<SignUp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Already have an account?"),
+                      const Text(
+                        "Already have an account?",
+                        style: TextStyle(fontSize: 16, color: Colors.white54),
+                      ),
                       TextButton(
                           onPressed: () {
                             //Navigate to sign up
@@ -187,7 +207,11 @@ class _SignUpState extends State<SignUp> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoginScreen()));
                           },
-                          child: const Text("Login"))
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ))
                     ],
                   )
                 ],

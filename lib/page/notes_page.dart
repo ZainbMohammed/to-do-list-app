@@ -43,27 +43,6 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        // appBar:
-        // AppBar(
-        //   title: const Padding(
-        //     padding: EdgeInsets.only(top: 30.0, left: 8),
-        //     child: Text(
-        //       'Notes',
-        //       style: TextStyle(fontSize: 30, color: Colors.white),
-        //     ),
-        //   ),
-        //   actions: const [
-        //     Padding(
-        //       padding: EdgeInsets.only(top: 30.0, right: 8),
-        //       child: Icon(
-        //         Icons.search,
-        //         size: 30,
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //     SizedBox(width: 12)
-        //   ],
-        // ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
           child: Column(
@@ -77,9 +56,6 @@ class _NotesPageState extends State<NotesPage> {
                   ),
                   IconButton(
                       onPressed: () {
-                        setState(() {
-                          // filteredNotes = sortNotesByModifiedTime(filteredNotes);
-                        });
                       },
                       padding: const EdgeInsets.all(0),
                       icon: Container(

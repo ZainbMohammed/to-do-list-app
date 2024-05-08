@@ -31,7 +31,7 @@ class MainApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: const SignUp(),
+      home: const NotesPage(),
     );
   }
 }
