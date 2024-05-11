@@ -11,7 +11,7 @@ A new Flutter project.
 ![Signup](signup.png)
 
 ### Notes Page
-![notes](login.png)
+![notes](tasks.png)
 
 This project is a starting point for a Flutter application.
 
