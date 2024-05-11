@@ -84,7 +84,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
         ),
         onPressed: addOrUpdateNote,
         child: const Text(
-          'Add',
+          'Save',
           style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.0),
         ),
@@ -103,7 +103,6 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       } else {
         await addNote();
       }
-
       Navigator.of(context).pop();
     }
   }

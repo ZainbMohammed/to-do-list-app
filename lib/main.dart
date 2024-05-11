@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:note_tasks_app/page/login.dart';
 import 'package:note_tasks_app/page/signup_page.dart';
 import 'page/notes_page.dart';
 
@@ -31,7 +32,7 @@ class MainApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: const NotesPage(),
+      home: const LoginScreen(),
     );
   }
 }

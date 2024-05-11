@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:note_tasks_app/db/notes_database.dart';
+import 'package:note_tasks_app/model/users2.dart';
 import 'package:note_tasks_app/page/login.dart';
 import 'package:note_tasks_app/model/users.dart';
 import 'package:note_tasks_app/db/sqlite.dart';
@@ -39,7 +41,7 @@ class _SignUpState extends State<SignUp> {
                     title: Text(
                       "Register New Account",
                       style: TextStyle(
-                          fontSize: 50,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: Colors.white70),
                     ),
@@ -166,23 +168,14 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.deepPurple),
                     child: TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState!.validate()) {
+                            await signup();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
                             //Login method will be here
-
-                            final db = DatabaseHelper();
-                            db
-                                .signup(Users(
-                                    usrName: username.text,
-                                    usrPassword: password.text))
-                                .whenComplete(() {
-                              //After success user creation go to login screen
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()));
-                            });
                           }
                         },
                         child: const Text(
@@ -221,5 +214,15 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  Future signup() async {
+    final user = User(
+      // userId: userId,
+      userName: username.text,
+      userPassword: password.text,
+    );
+
+    await NotesDatabase.instance.createUser(user);
   }
 }

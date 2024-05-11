@@ -55,8 +55,7 @@ class _NotesPageState extends State<NotesPage> {
                     style: TextStyle(fontSize: 30, color: Colors.white),
                   ),
                   IconButton(
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                       padding: const EdgeInsets.all(0),
                       icon: Container(
                         width: 40,

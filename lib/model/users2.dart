@@ -24,12 +24,9 @@ class User {
   });
 
   User copy({
-    int? id,
-    bool? isImportant,
-    int? number,
-    String? title,
-    String? description,
-    DateTime? createdTime,
+    int? userId,
+    String? userName,
+    String? userPassword,
   }) =>
       User(
         userId: userId ?? this.userId,

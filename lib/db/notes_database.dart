@@ -41,45 +41,51 @@ CREATE TABLE $tableNotes (
   )
 ''');
 
-    await db.execute('''
-CREATE TABLE $tableUsers (
-  ${UserFields.userId} $idType,
-  ${UserFields.userName} $textType,
-  ${UserFields.userPassword} $textType,
-  )
-''');
+//     await db.execute('''
+// CREATE TABLE $tableUsers (
+//   ${UserFields.userId} $idType,
+//   ${UserFields.userName} $textType,
+//   ${UserFields.userPassword} $textType
+//   )
+// ''');
+try {
+  await db.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+      _id INTEGER PRIMARY KEY,
+      userName TEXT,
+      userPassword TEXT
+    )
+  ''');
+
+  
+} catch (e) {
+  print('Error : $e');
+}
+
   }
 
   Future<Note> create(Note note) async {
     final db = await instance.database;
-
-    // final json = note.toJson();
-    // final columns =
-    //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
-    // final values =
-    //     '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
-    // final id = await db
-    //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
-
     final id = await db.insert(tableNotes, note.toJson());
     return note.copy(id: id);
   }
   // create user 
-  Future<User> createUser(User user) async {
-    final db = await instance.database;
+  // Future<User> createUser(User user) async {
+  //   final db = await instance.database;
+  //   final id = await db.insert(tableUsers, user.toJson());
+  //   return user.copy(id: id);
+  // }
+Future<User> createUser(User user) async {
+  final db = await instance.database;
 
-    // final json = note.toJson();
-    // final columns =
-    //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
-    // final values =
-    //     '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
-    // final id = await db
-    //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
-
+  try {
     final id = await db.insert(tableUsers, user.toJson());
-    return user.copy(id: id);
+    return user.copy(userId: id); // Assuming you have a copy method in your User class
+  } catch (e) {
+    print('Error creating user: $e');
+    throw Exception('Failed to create user');
   }
-
+}
   Future<Note> readNote(int id) async {
     final db = await instance.database;
 
@@ -117,7 +123,6 @@ CREATE TABLE $tableUsers (
 
   Future<List<Note>> readAllNotes() async {
     final db = await instance.database;
-
     final orderBy = '${NoteFields.time} ASC';
     // final result =
     //     await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
