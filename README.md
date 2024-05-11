@@ -8,7 +8,10 @@ A new Flutter project.
 ![Login](login.png)
 
 ### Login Page
-![Login](signup.png)
+![Signup](signup.png)
+
+### Notes Page
+![notes](login.png)
 
 This project is a starting point for a Flutter application.
 
