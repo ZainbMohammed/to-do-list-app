@@ -32,7 +32,7 @@ class MainApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: const LoginScreen(),
+      home: const NotesPage(),
     );
   }
 }
