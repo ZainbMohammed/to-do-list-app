@@ -1,91 +1,47 @@
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:note_tasks_app/model/note.dart';
-import 'package:note_tasks_app/model/users.dart';
+import 'package:path/path.dart';
 
 class DatabaseHelper {
-  final databaseName = "notes.db";
-  String noteTable =
-      "CREATE TABLE notes (noteId INTEGER PRIMARY KEY AUTOINCREMENT, noteTitle TEXT NOT NULL, noteContent TEXT NOT NULL, createdAt TEXT DEFAULT CURRENT_TIMESTAMP)";
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  factory DatabaseHelper() => _instance;
 
-  //Now we must create our user table into our sqlite db
+  static Database? _database;
+  final String tableName = 'users';
 
-  String users =
-      "create table users (usrId INTEGER PRIMARY KEY AUTOINCREMENT, usrName TEXT UNIQUE, usrPassword TEXT)";
+  DatabaseHelper._internal();
 
-  //We are done in this section
-
-  Future<Database> initDB() async {
-    final databasePath = await getDatabasesPath();
-    final path = join(databasePath, databaseName);
-
-    return openDatabase(path, version: 1, onCreate: (db, version) async {
-      await db.execute(users);
-      await db.execute(noteTable);
-    });
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await initDatabase();
+    return _database!;
   }
 
-  //Now we create login and sign up method
-  //as we create sqlite other functionality in our previous video
+  Future<Database> initDatabase() async {
+    String path = join(await getDatabasesPath(), 'users.db');
+    return await openDatabase(path, version: 1, onCreate: _createDb);
+  }
 
-  //IF you didn't watch my previous videos, check part 1 and part 2
+  void _createDb(Database db, int version) async {
+    await db.execute(
+        'CREATE TABLE $tableName(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)');
+  }
 
-  //Login Method
+  Future<void> insertUser(Map<String, dynamic> user) async {
+    Database db = await instance.database;
+    await db.insert(tableName, user);
+  }
 
-  Future<bool> login(Users user) async {
-    final Database db = await initDB();
-
-    // I forgot the password to check
-    var result = await db.rawQuery(
-        "select * from users where usrName = '${user.usrName}' AND usrPassword = '${user.usrPassword}'");
-    if (result.isNotEmpty) {
-      return true;
+  Future<Map<String, dynamic>?> getUser(String username) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> users = await db.query(
+      tableName,
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+    if (users.isNotEmpty) {
+      return users.first;
     } else {
-      return false;
+      return null;
     }
-  }
-
-  //Sign up
-  Future<int> signup(Users user) async {
-    final Database db = await initDB();
-
-    return db.insert('users', user.toMap());
-  }
-
-  //Search Method
-  Future<List<Note>> searchNotes(String keyword) async {
-    final Database db = await initDB();
-    List<Map<String, Object?>> searchResult = await db
-        .rawQuery("select * from notes where noteTitle LIKE ?", ["%$keyword%"]);
-    return searchResult.map((e) => Note.fromJson(e)).toList();
-  }
-
-  //CRUD Methods
-
-  //Create Note
-  Future<int> createNote(Note note) async {
-    final Database db = await initDB();
-    return db.insert('notes', note.toJson());
-  }
-
-  //Get notes
-  Future<List<Note>> getNotes() async {
-    final Database db = await initDB();
-    List<Map<String, Object?>> result = await db.query('notes');
-    return result.map((e) => Note.fromJson(e)).toList();
-  }
-
-  //Delete Notes
-  Future<int> deleteNote(int id) async {
-    final Database db = await initDB();
-    return db.delete('notes', where: 'noteId = ?', whereArgs: [id]);
-  }
-
-  //Update Notes
-  Future<int> updateNote(title, content, noteId) async {
-    final Database db = await initDB();
-    return db.rawUpdate(
-        'update notes set noteTitle = ?, noteContent = ? where noteId = ?',
-        [title, content, noteId]);
   }
 }

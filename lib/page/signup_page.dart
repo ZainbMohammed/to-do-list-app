@@ -223,6 +223,10 @@ class _SignUpState extends State<SignUp> {
       userPassword: password.text,
     );
 
-    await NotesDatabase.instance.createUser(user);
+    // await NotesDatabase.instance.createUser(user);
+    await DatabaseHelper().insertUser({
+                'username': username.text,
+                'password': password.text,
+              });
   }
 }

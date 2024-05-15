@@ -21,7 +21,7 @@ class NotesDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 2, onCreate: _createDB,onUpgrade: _upgrade);
+    return await openDatabase(path, version: 20, onCreate: _createDB,onUpgrade: _upgrade);
   }
 
   Future _createDB(Database db, int version) async {
@@ -42,7 +42,7 @@ CREATE TABLE $tableNotes (
 ''');
 }
 Future _upgrade(Database db, int oldVersion,int newVersion) async{
-  if(oldVersion >=2){
+  if(oldVersion >=20){
     try {
   await db.execute('''
     CREATE TABLE IF NOT EXISTS users (
@@ -72,18 +72,22 @@ Future _upgrade(Database db, int oldVersion,int newVersion) async{
   //   final id = await db.insert(tableUsers, user.toJson());
   //   return user.copy(id: id);
   // }
-Future<User> createUser(User user) async {
-  final db = await instance.database;
+// Future<User> createUser(User user) async {
+//   final db = await instance.database;
 
-  try {
-    final id = await db.insert(tableUsers, user.toJson());
-    return user.copy(userId: id); // Assuming you have a copy method in your User class
-  } catch (e) {
-    print('Error creating user: $e');
-    throw Exception('Failed to create user');
+//   try {
+//     final id = await db.insert(tableUsers, user.toJson());
+//     return user.copy(userId: id); // Assuming you have a copy method in your User class
+//   } catch (e) {
+//     print('Error creating user: $e');
+//     throw Exception('Failed to create user');
+//   }
+// }
+Future<void> insertUser(Map<String, dynamic> user) async {
+    Database db = await instance.database;
+    await db.insert(tableUsers, user);
   }
-}
-  Future<Note> readNote(int id) async {
+Future<Note> readNote(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
@@ -101,24 +105,35 @@ Future<User> createUser(User user) async {
   }
 
   // read user
-  Future<User> readUser(int userId) async {
-    final db = await instance.database;
+  // Future<User> readUser(int userId) async {
+  //   final db = await instance.database;
 
-    final maps = await db.query(
+  //   final maps = await db.query(
+  //     tableUsers,
+  //     where: 'username = ?',
+  //     whereArgs: [userId],
+  //   );
+
+  //   if (maps.isNotEmpty) {
+  //     return User.fromJson(maps.first);
+  //   } else {
+  //     throw Exception('ID $userId not found');
+  //   }
+  // }
+Future<Map<String, dynamic>?> getUser(String username) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> users = await db.query(
       tableUsers,
-      columns: UserFields.values,
-      where: '${UserFields.userId} = ?',
-      whereArgs: [userId],
+      where: 'username = ?',
+      whereArgs: [username],
     );
-
-    if (maps.isNotEmpty) {
-      return User.fromJson(maps.first);
+    if (users.isNotEmpty) {
+      return users.first;
     } else {
-      throw Exception('ID $userId not found');
+      return null;
     }
-  }
-
-  Future<List<Note>> readAllNotes() async {
+}
+Future<List<Note>> readAllNotes() async {
     final db = await instance.database;
     final orderBy = '${NoteFields.time} ASC';
     // final result =
@@ -127,7 +142,7 @@ Future<User> createUser(User user) async {
     final result = await db.query(tableNotes, orderBy: orderBy);
 
     return result.map((json) => Note.fromJson(json)).toList();
-  }
+}
 
   Future<int> update(Note note) async {
     final db = await instance.database;

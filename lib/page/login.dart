@@ -28,15 +28,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //Now we should call this function in login button
   login() async {
-    var response = await db
-        .login(Users(usrName: username.text, usrPassword: password.text));
-    if (response == true) {
-      //If login is correct, then goto notes
-      if (!mounted) return;
+    // var response = await db
+    //     .login(Users(usrName: username.text, usrPassword: password.text));
+    // if (response == true) {
+    //   //If login is correct, then goto notes
+    //   if (!mounted) return;
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => const NotesPage()));
+    // } else {
+    //   //If not, true the bool value to show error message
+    //   setState(() {
+    //     isLoginTrue = true;
+    //   });
+    // }
+    Map<String, dynamic>? user = await DatabaseHelper().getUser(username.text);
+    if (user != null && user['password'] == password.text) {
+      // Login successful, navigate to home screen or perform any other action
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const NotesPage()));
     } else {
-      //If not, true the bool value to show error message
+      // Invalid username or password
       setState(() {
         isLoginTrue = true;
       });
@@ -144,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.deepPurple),
                     child: TextButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             //Login method will be here
                             await login();
