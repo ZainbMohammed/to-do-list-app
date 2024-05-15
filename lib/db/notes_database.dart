@@ -21,7 +21,7 @@ class NotesDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path, version: 2, onCreate: _createDB,onUpgrade: _upgrade);
   }
 
   Future _createDB(Database db, int version) async {
@@ -40,22 +40,18 @@ CREATE TABLE $tableNotes (
   ${NoteFields.time} $textType
   )
 ''');
-
-//     await db.execute('''
-// CREATE TABLE $tableUsers (
-//   ${UserFields.userId} $idType,
-//   ${UserFields.userName} $textType,
-//   ${UserFields.userPassword} $textType
-//   )
-// ''');
-try {
+}
+Future _upgrade(Database db, int oldVersion,int newVersion) async{
+  if(oldVersion >=2){
+    try {
   await db.execute('''
     CREATE TABLE IF NOT EXISTS users (
-      _id INTEGER PRIMARY KEY,
-      userName TEXT,
-      userPassword TEXT
+      _id INTEGER PRIMARY KEY AUTOINCREMENT,
+      userName TEXT NOT NULL,
+      userPassword TEXT NOT NULL
     )
   ''');
+    print('user table created successful');
 
   
 } catch (e) {
@@ -63,6 +59,7 @@ try {
 }
 
   }
+}
 
   Future<Note> create(Note note) async {
     final db = await instance.database;

@@ -144,10 +144,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.deepPurple),
                     child: TextButton(
-                        onPressed: () {
+                        onPressed: () async{
                           if (formKey.currentState!.validate()) {
                             //Login method will be here
-                            login();
+                            await login();
 
                             //Now we have a response from our sqlite method
                             //We are going to create a user
