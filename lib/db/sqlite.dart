@@ -27,12 +27,12 @@ class DatabaseHelper {
   }
 
   Future<void> insertUser(Map<String, dynamic> user) async {
-    Database db = await instance.database;
+    Database db = await _instance.database;
     await db.insert(tableName, user);
   }
 
   Future<Map<String, dynamic>?> getUser(String username) async {
-    Database db = await instance.database;
+    Database db = await _instance.database;
     List<Map<String, dynamic>> users = await db.query(
       tableName,
       where: 'username = ?',
