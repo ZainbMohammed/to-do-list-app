@@ -217,11 +217,11 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future signup() async {
-    final user = User(
-      // userId: userId,
-      userName: username.text,
-      userPassword: password.text,
-    );
+    // final user = User(
+    //   // userId: userId,
+    //   userName: username.text,
+    //   userPassword: password.text,
+    // );
 
     // await NotesDatabase.instance.createUser(user);
     await DatabaseHelper().insertUser({
