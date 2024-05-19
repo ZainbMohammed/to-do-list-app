@@ -4,15 +4,6 @@ A new Flutter project.
 
 ## Getting Started
 
-### Login Page
-![Login](login.png)
-
-### Login Page
-![Signup](signup.png)
-
-### Notes Page
-![notes](tasks.png)
-
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
@@ -23,3 +14,12 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+### Login Page
+![Login](login.png)
+
+### Login Page
+![Signup](signup.png)
+
+### Notes Page
+![notes](tasks.png)
